@@ -19,7 +19,7 @@ export default function Login() {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', {
+      const res = await axios.post('http://localhost:3000/api/auth/login', {
         identifier,
         password,
       });
@@ -32,7 +32,7 @@ export default function Login() {
       localStorage.setItem('userRole', decoded.role);
 
       // Optionally fetch and store userName
-      const userRes = await axios.get(`http://localhost:5000/api/users/${decoded.id}`, {
+      const userRes = await axios.get(`http://localhost:3000/api/users/${decoded.id}`, {
         headers: { Authorization: `Bearer ${res.data.token}` }
       });
       localStorage.setItem('userName', userRes.data.full_name);

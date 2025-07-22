@@ -6,7 +6,7 @@ export default function useSocket() {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:5000');
+    const ws = new WebSocket('ws://localhost:3000');
 
     ws.onopen = () => {
       setSocket(ws);

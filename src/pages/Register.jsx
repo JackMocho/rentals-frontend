@@ -49,7 +49,7 @@ export default function Register() {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/auth/register', form);
+      await axios.post('http://localhost:3000/api/auth/register', form);
       alert('Registration successful! Awaiting approval.');
       window.location.href = '/login';
     } catch (err) {

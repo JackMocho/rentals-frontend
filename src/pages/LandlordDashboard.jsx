@@ -112,7 +112,7 @@ export default function LandlordDashboard() {
   const fetchMessages = async () => {
     try {
       // Use the recent inbox endpoint for richer sender info
-      const res = await axios.get(`http://localhost:5000/api/chat/messages/recent/${userId}`, {
+      const res = await axios.get(`http://localhost:3000/api/chat/messages/recent/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessages(res.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)));
@@ -124,7 +124,7 @@ export default function LandlordDashboard() {
   const fetchAllChats = async () => {
     try {
       // Fetch all messages where landlord is receiver for any rental
-      const res = await axios.get(`http://localhost:5000/api/chat/messages/recent/${userId}`, {
+      const res = await axios.get(`http://localhost:3000/api/chat/messages/recent/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       // Group by rental and client
@@ -167,7 +167,7 @@ export default function LandlordDashboard() {
   const handleDeleteRental = async (id) => {
     if (!window.confirm('Are you sure you want to delete this rental?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/rentals/${id}`, {
+      await axios.delete(`http://localhost:3000/api/rentals/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       await fetchRentals();
@@ -182,7 +182,7 @@ export default function LandlordDashboard() {
     if (!replyText.trim()) return;
     try {
       await axios.post(
-        'http://localhost:5000/api/chat/send',
+        'http://localhost:3000/api/chat/send',
         {
           rental_id: msg.rental_id,
           sender_id: userId,
@@ -203,7 +203,7 @@ export default function LandlordDashboard() {
   const handleBookRental = async (id) => {
     if (!window.confirm('Mark this rental as Booked?')) return;
     try {
-      await axios.put(`http://localhost:5000/api/rentals/${id}/book`, {}, {
+      await axios.put(`http://localhost:3000/api/rentals/${id}/book`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       await fetchRentals();
@@ -217,7 +217,7 @@ export default function LandlordDashboard() {
   const handleMakeAvailable = async (id) => {
     if (!window.confirm('Mark this rental as available?')) return;
     try {
-      await axios.put(`http://localhost:5000/api/rentals/${id}/available`, {}, {
+      await axios.put(`http://localhost:3000/api/rentals/${id}/available`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       await fetchRentals();
@@ -408,7 +408,7 @@ export default function LandlordDashboard() {
                         setSelectedChatUser(u);
                         // Fetch messages for this rental and client
                         const res = await axios.get(
-                          `http://localhost:5000/api/chat/messages/${u.rentalId}`,
+                          `http://localhost:3000/api/chat/messages/${u.rentalId}`,
                           { headers: { Authorization: `Bearer ${token}` } }
                         );
                         setChatMessages(res.data.filter(
@@ -465,7 +465,7 @@ export default function LandlordDashboard() {
                     onClick={async () => {
                       if (!replyText.trim()) return;
                       await axios.post(
-                        'http://localhost:5000/api/chat/send',
+                        'http://localhost:3000/api/chat/send',
                         {
                           sender_id: userId,
                           receiver_id: selectedChatUser.userId,
@@ -477,7 +477,7 @@ export default function LandlordDashboard() {
                       setReplyText('');
                       // Refresh chat
                       const res = await axios.get(
-                        `http://localhost:5000/api/chat/messages/${selectedChatUser.rentalId}`,
+                        `http://localhost:3000/api/chat/messages/${selectedChatUser.rentalId}`,
                         { headers: { Authorization: `Bearer ${token}` } }
                       );
                       setChatMessages(res.data.filter(

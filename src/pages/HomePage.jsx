@@ -16,7 +16,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/stats/counts');
+        const res = await axios.get('http://localhost:3000/api/stats/counts');
         setStats(res.data);
       } catch (err) {}
     };

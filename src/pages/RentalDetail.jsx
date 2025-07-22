@@ -25,7 +25,7 @@ export default function RentalDetail() {
 
         // Fetch landlord details if needed
         if (res.data.user_id) {
-          const userRes = await axios.get(`http://localhost:5000/api/users/${res.data.user_id}`);
+          const userRes = await axios.get(`http://localhost:3000/api/users/${res.data.user_id}`);
           setLandlord(userRes.data);
         }
       } catch (err) {
@@ -42,7 +42,7 @@ export default function RentalDetail() {
     const fetchClients = async () => {
       if (!rental || !decoded || decoded.id !== rental.user_id) return;
       try {
-        const res = await axios.get(`http://localhost:5000/api/chat/messages/${id}`, {
+        const res = await axios.get(`http://localhost:3000/api/chat/messages/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         // Get unique client IDs (exclude landlord)
@@ -56,7 +56,7 @@ export default function RentalDetail() {
         // Fetch client details
         const clientDetails = await Promise.all(
           clientIds.map(cid =>
-            axios.get(`http://localhost:5000/api/users/${cid}`).then(r => r.data)
+            axios.get(`http://localhost:3000/api/users/${cid}`).then(r => r.data)
           )
         );
         setClients(clientDetails);

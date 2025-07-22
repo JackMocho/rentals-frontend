@@ -80,7 +80,7 @@ export default function EditRentalForm({ rental, onSave, onCancel }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/rentals/${rental.id}`, form, {
+      await axios.put(`http://localhost:3000/api/rentals/${rental.id}`, form, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setSuccessMsg('Saved successfully!');

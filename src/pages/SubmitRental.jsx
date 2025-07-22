@@ -92,7 +92,7 @@ export default function SubmitRental() {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/rentals/submit', payload, {
+      await axios.post('http://localhost:3000/api/rentals/submit', payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSuccessMsg(
