@@ -1,3 +1,1 @@
-export const API_URL = process.env.NODE_ENV === 'production'
-  ? 'https://backend-96ih.onrender.com'
-  : 'http://localhost:3000';
+export const API_URL = import.meta.env.VITE_API_URL;
