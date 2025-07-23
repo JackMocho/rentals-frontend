@@ -4,6 +4,7 @@ import LocationPicker from '../components/LocationPicker';
 import useAutoLocation from '../hooks/useAutoLocation';
 import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../utils/apiBase';
+import { supabase } from '../utils/supabaseClient';
 
 export default function SubmitRental() {
   const navigate = useNavigate();
@@ -41,27 +42,23 @@ export default function SubmitRental() {
   };
 
   // Handle file uploads for images
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const files = Array.from(e.target.files);
-    const newPreviews = [];
-    const newImages = [];
+    const urls = [];
 
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        newPreviews.push(reader.result);
-        newImages.push(reader.result);
-        // Only update state after all files are read
-        if (newPreviews.length === files.length) {
-          setPreviews((prev) => [...prev, ...newPreviews]);
-          setForm((prev) => ({
-            ...prev,
-            images: [...prev.images, ...newImages],
-          }));
-        }
-      };
-      reader.readAsDataURL(file);
-    });
+    for (const file of files) {
+      const filePath = `public/${Date.now()}_${file.name}`;
+      const { error } = await supabase.storage.from('rentals-images').upload(filePath, file);
+      if (!error) {
+        const { data } = supabase.storage.from('rentals-images').getPublicUrl(filePath);
+        urls.push(data.publicUrl);
+      }
+    }
+
+    setForm((prev) => ({
+      ...prev,
+      images: [...prev.images, ...urls],
+    }));
   };
 
   const handleLocationChange = (loc) => {
